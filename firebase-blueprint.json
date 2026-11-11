@@ -1,0 +1,101 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Student profile, engineering branch, academic year, and career aspirations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "Student email address" },
+        "displayName": { "type": "string", "description": "Full name or preferred name" },
+        "university": { "type": "string", "description": "College or university name" },
+        "branch": { "type": "string", "description": "Engineering discipline: CSE, ECE, Mechanical, Civil, Electrical, etc." },
+        "major": { "type": "string", "description": "Academic major or degree program" },
+        "academicYear": { "type": "string", "description": "Current college year (1st, 2nd, 3rd, 4th year)" },
+        "graduationYear": { "type": "string", "description": "Expected graduation year" },
+        "targetRole": { "type": "string", "description": "Selected target internship role" },
+        "technicalInterests": { "type": "array", "description": "Selected engineering technical interests" },
+        "completedSkills": { "type": "array", "description": "List of mastered skills marked by student" },
+        "bio": { "type": "string", "description": "Short student bio or career aspirations" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["id", "email", "displayName"]
+    },
+    "AssessmentResult": {
+      "title": "AssessmentResult",
+      "description": "Student technical assessment results and evidence across engineering branches",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique assessment session ID" },
+        "studentId": { "type": "string", "description": "UID of the student" },
+        "roleId": { "type": "string", "description": "Target role ID, e.g. mechanical-design-intern, embedded-systems-intern, sde-intern" },
+        "roleTitle": { "type": "string", "description": "Readable title of the evaluated role" },
+        "branch": { "type": "string", "description": "Engineering branch evaluated" },
+        "completedAt": { "type": "string", "description": "Completion timestamp" },
+        "overallScore": { "type": "number", "description": "Overall score percentage 0-100" },
+        "skillScores": { "type": "object", "description": "Individual skill category scores and evidence" },
+        "answers": { "type": "object", "description": "Student submitted answers and rationale" },
+        "strengths": { "type": "array", "description": "Key strengths identified from results" },
+        "priorityGaps": { "type": "array", "description": "Priority skill gaps identified" },
+        "status": { "type": "string", "description": "Status of the assessment: completed or in_progress" },
+        "createdAt": { "type": "string", "description": "Timestamp of creation" }
+      },
+      "required": ["id", "studentId", "roleId", "overallScore", "status"]
+    },
+    "Roadmap": {
+      "title": "Roadmap",
+      "description": "Personalized learning roadmap and milestone plan for engineering career",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Roadmap ID" },
+        "studentId": { "type": "string", "description": "UID of student" },
+        "assessmentId": { "type": "string", "description": "Reference assessment ID" },
+        "roleId": { "type": "string", "description": "Role identifier" },
+        "roleTitle": { "type": "string", "description": "Role display title" },
+        "branch": { "type": "string", "description": "Engineering branch" },
+        "weeklyPlan": { "type": "array", "description": "Structured weekly curriculum" },
+        "portfolioProjects": { "type": "array", "description": "Recommended hands-on engineering portfolio projects" },
+        "gapExplanations": { "type": "array", "description": "Beginner-friendly breakdown of skill gaps" },
+        "completedMilestones": { "type": "array", "description": "List of finished milestone IDs" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "studentId", "roleId"]
+    },
+    "MockInterview": {
+      "title": "MockInterview",
+      "description": "Branch-specific AI mock interview transcript and evaluation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Interview session ID" },
+        "studentId": { "type": "string", "description": "UID of student" },
+        "roleId": { "type": "string", "description": "Target role" },
+        "branch": { "type": "string", "description": "Engineering domain" },
+        "status": { "type": "string", "description": "Status: in_progress or completed" },
+        "messages": { "type": "array", "description": "Chat interview turns" },
+        "overallFeedback": { "type": "string", "description": "Post-interview constructive feedback" },
+        "score": { "type": "number", "description": "Evaluation score" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "studentId", "roleId", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Isolated student profile document, accessible only by owner"
+    },
+    "/users/{userId}/assessments/{assessmentId}": {
+      "schema": "AssessmentResult",
+      "description": "Assessment records belonging strictly to the student"
+    },
+    "/users/{userId}/roadmaps/{roadmapId}": {
+      "schema": "Roadmap",
+      "description": "Learning roadmap belonging strictly to the student"
+    },
+    "/users/{userId}/interviews/{interviewId}": {
+      "schema": "MockInterview",
+      "description": "Mock interview sessions belonging strictly to the student"
+    }
+  }
+}

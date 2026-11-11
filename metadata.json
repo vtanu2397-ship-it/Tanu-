@@ -1,0 +1,6 @@
+{
+  "name": "SkillPath AI — Student Career Intelligence Platform",
+  "description": "AI-powered career intelligence, technical skill assessment, gap analysis, and personalized roadmaps for college students pursuing technical internships.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
